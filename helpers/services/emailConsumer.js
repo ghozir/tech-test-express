@@ -1,4 +1,3 @@
-// services/emailConsumer.js
 const { getChannel } = require('../utils/rabbitMQ');
 const nodemailer = require('nodemailer');
 
@@ -14,11 +13,7 @@ async function consumeEmailQueue() {
       if (msg !== null) {
         const emailData = JSON.parse(msg.content.toString());
         console.log("Received email data:", emailData);
-
-        // Send email using Nodemailer
         await sendEmail(emailData);
-
-        // Acknowledge the message
         channel.ack(msg);
       }
     });
@@ -30,15 +25,15 @@ async function consumeEmailQueue() {
 async function sendEmail({ to, subject, text }) {
   try {
     const transporter = nodemailer.createTransport({
-      service: 'gmail',  // Atur sesuai penyedia email
+      service: 'gmail', 
       auth: {
-        user: 'your-email@gmail.com',
-        pass: 'your-email-password',
+        user: 'groom.adm@gmail.com',
+        pass: 'ptnifoggrtszgnuf',
       },
     });
 
     const info = await transporter.sendMail({
-      from: '"Your App" <your-email@gmail.com>',
+      from: '"Your App" <groom.adm@gmail.com>',
       to,
       subject,
       text,
